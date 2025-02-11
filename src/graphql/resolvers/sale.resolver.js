@@ -2,8 +2,12 @@ import salesJson from '../../data/sales.json' assert { type: "json" };
 
 export const saleResolver = {
      Query: {
-            sales: () => {
-                console.log('salesJson', salesJson);
+        sales: (parent, args) => {
+                console.log('args', args);
+                 const limit = args.limit
+                if (limit) {
+                    return salesJson.slice(0, limit);
+                }         
                 return salesJson;
             },
             sale: (parent, args, context, info) => {

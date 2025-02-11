@@ -11,7 +11,7 @@ export const SaleType = `
         customer: Customer
     }
     type Query {
-        sales: [Sale]
+        sales(limit: Int): [Sale]
         sale(saleId: ID!): Sale
     }
 `
