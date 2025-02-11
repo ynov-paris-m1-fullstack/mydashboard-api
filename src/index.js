@@ -1,15 +1,14 @@
-const { ApolloServer } = require('@apollo/server');
-const { expressMiddleware } = require("@apollo/server/express4");
-const http = require('http');
-const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer');
-const express = require('express');
-const salesJson = require('./data/sales.json');
-const jwt = require('jsonwebtoken');
-const cors = require('cors');
-var bodyParser = require('body-parser');
-require('dotenv').config();
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../swagger.json');
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from "@apollo/server/express4";
+import http from 'http';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import 'dotenv/config';
+import { typeDefs } from './graphql/type/index.js';
+import { resolvers } from './graphql/resolvers/index.js';
 
 const app = express();
 
@@ -17,55 +16,6 @@ const initApp = async () => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cors());
-
-    const typeDefs = `
-    type Sale {
-        saleId: ID!
-        quantitySold: Int
-        totalRevenue: Int
-        saleDate: String
-        region : String
-        salesChannel: String
-        paymentMethod: String
-        product: Product
-        customer: Customer
-    }
-
-    type Product {
-        productId: ID!
-        name: String
-        category: String
-        price: Int
-        brand: String
-        releaseYear: String
-        features: [String]
-    }
-
-    type Customer {
-        customerId: ID!
-        username: String
-        age: Int
-        gender: String
-        loyaltyMember: Boolean
-        loyaltyPointsEarned: Int
-    }
-
-    type Query {
-        sales: [Sale]
-        sale(saleId: ID!): Sale
-    }
-`
-    const resolvers = {
-        Query: {
-            sales: () => {
-                console.log('salesJson', salesJson);
-                return salesJson;
-            },
-            sale: (parent, args, context, info) => {
-                return salesJson.find(sale => sale.saleId == args.saleId);
-            }
-        }
-    }
 
     const httpServer = http.createServer(app);
 
