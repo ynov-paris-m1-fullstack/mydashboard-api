@@ -2,7 +2,7 @@
   "name": "hackathon",
   "version": "1.0.0",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production node ./src/index.js",
@@ -13,6 +13,7 @@
   "description": "",
   "dependencies": {
     "@apollo/server": "^4.11.2",
+    "@prisma/client": "^6.3.1",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
