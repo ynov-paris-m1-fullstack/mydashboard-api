@@ -12,3 +12,41 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// datasource db {
+//   provider = "sqlite"
+//   url      = "file:./dev.db"
+// }
+
+model Sale {
+  saleId            Int      @id @default(autoincrement())
+  quantitySold      Int      @default(0)
+  totalRevenue      Float    @default(0)
+  saleDate          DateTime @default(now())
+  region            String  @default("")
+  salesChannel      String @default("")
+  paymentMethod     String  @default("")
+  purchaseFeedback  String  @default("")
+  productId         Int     @default(1)
+  product           Product @relation(fields: [productId], references: [productId])
+}
+
+model Product {
+  productId   Int      @id @default(autoincrement())
+  name        String   @default("")
+  category    String   @default("")
+  price       Float    @default(0)
+  brand       String   @default("")
+  releaseYear Int      @default(0)
+  sales       Sale[]
+}
+
+model Customer {
+  customerId    Int @id @default(autoincrement())
+  username      String @default("")
+  age           Int @default(0)
+  gender        String @default("")
+}
+
+// => npx prisma migrate dev --name init
+// => npx prisma studio

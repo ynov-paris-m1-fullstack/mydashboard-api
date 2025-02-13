@@ -6,3 +6,10 @@ check if my database is created => \l
 ____
 
 DATABASE_URL=postgres://myUser:myPassword@localhost:5432/mydashboard
+
+__
+Après l'ajout du model : 
+npx prisma migrate dev --name init
+
+__
+npx prisma studio

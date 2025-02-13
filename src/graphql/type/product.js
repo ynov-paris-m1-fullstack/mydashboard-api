@@ -6,6 +6,16 @@ export const ProductType = `
         price: Int
         brand: String
         releaseYear: String
-        features: [String]
+    }
+    input ProductInput {
+        name: String
+        category: String
+        price: Float
+        brand: String
+        releaseYear: String
+    }
+    type Mutation {
+        addProduct(input: ProductInput): Product
     }
 `
+// addProduct(name: String category: String, price: Float, brand: String, releaseYear: String): Product
