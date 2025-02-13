@@ -16,7 +16,7 @@ export const ProductType = `
         category: String
         price: Float
         brand: String
-        releaseYear: String
+        releaseYear: Int
     }
     type Mutation {
         addProduct(input: ProductInput): Product
