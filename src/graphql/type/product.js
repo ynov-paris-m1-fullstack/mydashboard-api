@@ -7,6 +7,10 @@ export const ProductType = `
         brand: String
         releaseYear: String
     }
+    type Response {
+        message: String,
+        success: Boolean
+    }
     input ProductInput {
         name: String
         category: String
