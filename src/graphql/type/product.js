@@ -20,6 +20,7 @@ export const ProductType = `
     }
     type Mutation {
         addProduct(input: ProductInput): Product
+        updateProduct(productId: ID!, input: ProductInput): Product
     }
 `
 // addProduct(name: String category: String, price: Float, brand: String, releaseYear: String): Product

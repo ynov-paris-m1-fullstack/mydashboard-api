@@ -1,3 +1,4 @@
+Avec brew : psql postgres
 CREATE DATABASE mydashboard
 CREATE USER myUser WITH PASSWORD 'myPassword'
 GRANT ALL PRIVILEGES ON DATABASE mydashboard TO myUser
