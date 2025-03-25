@@ -13,7 +13,7 @@ import jwt from 'jsonwebtoken';
 // retourner le token
 
 const authController = {
-    register : async (req, res) => {
+    register: async (req, res) => {
         const { firstName, lastName, email, password } = req.body;
         try {
             // check if email exist 
@@ -66,6 +66,7 @@ const authController = {
         const { email, password } = req.body;
         // verifie que mail existe
         // vérifie que le mot de passe est correct bcrypt.compareSync
+        // https://www.npmjs.com/package/bcryptjs
         // générer un token
         // retourner le token
     }
