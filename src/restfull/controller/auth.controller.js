@@ -40,9 +40,11 @@ const authController = {
                 }
             });
 
+            console.log(user);
+
             const token = jwt.sign(
                 {
-                    id: user.id,
+                    id: user.userId,
                 },
                 process.env.JWT_SECRET, {
                 expiresIn: 86400
