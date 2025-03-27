@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 export default function isAuthenticated(req, res, next) {
-    // token récupérer et envoyé depuis le front
+    // token récupéré et envoyé depuis le front
     const token = req.headers.authorization;
     console.log(token);
     if (!token) {
