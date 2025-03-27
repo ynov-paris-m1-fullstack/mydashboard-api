@@ -48,37 +48,46 @@ const authController = {
         }
     },
     login: async (req, res) => {
-        // je vaich chercer les inputs du formulaire login dans le body de la request
-        const { email, password } = req.body;
-        // je vérifie en BDD si j'ai un utulisateur qui est bien renseigné avec l'email envoyé
-        const user = await prisma.user.findUnique({
-            where: {
-                email
+        try {
+            // je vaich chercer les inputs du formulaire login dans le body de la request
+            const { email, password } = req.body;
+            // je vérifie en BDD si j'ai un utulisateur qui est bien renseigné avec l'email envoyé
+            const user = await prisma.user.findUnique({
+                where: {
+                    email
+                }
+            });
+            // Si pas d'utilisateur, on renvoie une message d'erreur
+            if(!user) {
+                return res.status(404).json({
+                    message: "User not found",
+                    success: false
+                });
             }
-        });
-        // Si pas d'utilisateur, on renvoie une message d'erreur
-        if(!user) {
-            return res.status(404).json({
-                message: "User not found",
+            // On vérifie si le mot de passe envoyé est le même que celui enregistré en BDD
+            const passwordIsValid = bcrypt.compareSync(password, user.password);
+            // Si le mot de passe n'est pas le bon, on renvoie une message d'erreur
+            if(!passwordIsValid) {
+                return res.status(401).json({
+                    message: "Invalid password",
+                    success: false
+                });
+            }
+            // Si tout est bon, on génère un token
+            const token = generateToken(user.userId);
+            // On renvoie le token dans la réponse
+            return res.status(200).json({
+                token,
+                success: true
+            });
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).json({
+                message: err.message,
                 success: false
             });
         }
-        // On vérifie si le mot de passe envoyé est le même que celui enregistré en BDD
-        const passwordIsValid = bcrypt.compareSync(password, user.password);
-        // Si le mot de passe n'est pas le bon, on renvoie une message d'erreur
-        if(!passwordIsValid) {
-            return res.status(401).json({
-                message: "Invalid password",
-                success: false
-            });
-        }
-        // Si tout est bon, on génère un token
-        const token = generateToken(user.id);
-        // On renvoie le token dans la réponse
-        return res.status(200).json({
-            token,
-            success: true
-        });
     }
 }
 

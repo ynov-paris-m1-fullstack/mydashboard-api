@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 const userController = {
     getMe: async (req, res) => {
+        console.log("me");
         try {
             
             const user = await prisma.user.findUnique({
